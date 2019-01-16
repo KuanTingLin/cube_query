@@ -22,10 +22,7 @@ def read_table(name):
 
 def tables():
     config = configparser.ConfigParser()
-    config.read("./conf/cubes.ini", encoding="utf-8")
+    config.read("../conf/cubes.ini", encoding="utf-8")
     cubes = config["cubes"].get("names").split(" ")
     return cubes
 
-
-if __name__ == "__main__":
-    print(read_table("member"))
