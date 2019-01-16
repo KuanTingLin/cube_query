@@ -134,26 +134,9 @@ def draw_tables():
                                    plot_type=["scatter", "line", "area", "column", "bar", "pie", "doughnut"],
                                    ploting_datas=ploting_datas)
 
-# @app.route('/plot.png')
-# def plot():
-#     fig = Figure()
-#     axis = fig.add_subplot(1, 1, 1)
-#     xs = range(100)
-#     ys = [random.randint(1, 50) for x in xs]
-#     axis.scatter(xs, ys)
-#     axis.scatter(xs, ys)
-#     axis.scatter(xs, ys)
-#     canvas = FigureCanvas(fig)
-#     output = io.BytesIO()
-#     canvas.print_png(output)
-#     response = make_response(output.getvalue())
-#     response.mimetype = 'image/png'
-#     return response
-
 
 @app.route("/tables")
 def show_tables():
-    # print(request.headers)
     sql = request.cookies.get('sql')
     lines = int(request.cookies.get('lines'))
     print(sql.lower().split(" "))
@@ -184,9 +167,6 @@ def home():
             response = make_response(redirect(url_for('show_tables')))
             response.delete_cookie('sql')
             response.delete_cookie('lines')
-            # response.headers["sql"] = results["sql_input"].replace("\r\n", " ").replace(" ", "|")
-            # response.headers["lines"] = results["lines"]
-            # print(response)
             response.set_cookie('sql', results["sql_input"].replace("\r\n", " "))
             response.set_cookie('lines', results["lines"])
             return response
@@ -209,7 +189,6 @@ def home():
             response.delete_cookie('lines')
             response.delete_cookie('table_name')
             response.set_cookie('table_name', results["submit"])
-            # response.headers["table_name"] = results["submit"]
 
             return response
 
