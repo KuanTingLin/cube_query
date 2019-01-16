@@ -67,6 +67,8 @@ def query_data(table_name, sql=None):
         df = spark.read.parquet(path=table["path"])
     elif table["type"] == "csv":
         df = spark.read.csv(path=table["path"], sep=table["sep"], header=table["header"])
+    elif table["type"] == "json":
+        df = spark.read.json(path=table["path"])
     else:
         pass
 
