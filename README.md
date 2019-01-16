@@ -15,5 +15,19 @@
 > 2. ### You may experiment on various plot types that we offer.
 > 3. ### By choosing a cohort column, it would first group by cohort column, then generate a graph for each cohort. Remember: you can choose only a set of x-column and y-column for better comparison between cohorts.
 
+## quick start
+```
+    $ git clone https://github.com/KuanTingLin/cube_query.git
+    $ cd cube_query/project
+    $ python app.py
+```
 
+## set host and port
+```
+    $ python app.py --host 127.0.0.1 -p 5000
+```
 
+## check arguments
+```
+    $ python app.py -h
+```

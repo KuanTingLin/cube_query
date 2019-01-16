@@ -10,7 +10,22 @@ import json
 import pandas as pd
 from project.scatter_plot import StatisticAnaly
 from project.DAO.dao import read_table, tables
+import sys
+from argparse import ArgumentParser
 
+parser = ArgumentParser()
+
+parser.add_argument('--host', '--host',
+                    help='Set host, Default is 127.0.0.1',
+                    dest='host',
+                    type=str,
+                    default='127.0.0.1')
+
+parser.add_argument('-p', '--port',
+                    help='Set the port number, Default is 5000',
+                    dest='port',
+                    type=int,
+                    default=5000)
 
 spark = SparkSession.builder \
     .appName("VenRaaS upload") \
@@ -196,7 +211,8 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', debug=True)
+    args = parser.parse_args()
+    app.run(host=args.host, port=args.port, debug=True)
 
 
 
