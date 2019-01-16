@@ -1,0 +1,141 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SPARK SQL</title>
+    <style>
+    TD {line-height: 26px;}
+    </style>
+    <script src="chrome-extension://mooikfkahbdckldjjndioackbalphokd/assets/prompt.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript">
+
+        var y_column_name = 1;
+        var plot_name = 10101;
+        var datas = {};
+
+        function add(){
+            var newNode = document.createElement("h2");
+            var objDivs = document.getElementById("selectAxis");
+            var reforeNode = objDivs[objDivs.childElementCount-1];
+            y_column_name += 1;
+            newNode.innerHTML = 'y' + y_column_name.toString() + ' axis : <select name="' + 'y_' + y_column_name.toString() + '">{% for option in options %}<option value="{{ option|safe }}">{{ option|safe }}</option>{% endfor %}</select> <select name="y_' + y_column_name.toString() + '_aggregate">{% for type in aggregate_type %}<option value="{{ type|safe }}">{{ type|safe }}</option>{% endfor %}</select> <select name="y_' + y_column_name.toString() + '_types">{% for type in plot_type %}<option value="{{ type|safe }}">{{ type|safe }}</option>{% endfor %}</select>';
+            objDivs.insertBefore(newNode,reforeNode);
+        };
+
+        function minus(){
+            var objDivs = document.getElementById("selectAxis");
+            if (objDivs.childElementCount > 4){
+                objDivs.removeChild(objDivs.lastElementChild)
+                y_column_name -= 1};
+        };
+
+        function collect_datas(){
+            var objDivs = document.getElementById("selectAxis");
+            objDivs.children.forEach(function(children){
+                children.forEach(function(child){
+                    datas[child.name] = child[child.options.selectedIndex]["innerText"];
+                })
+            });
+            alert(objDivs);
+            return objDivs
+        };
+        function show_plot(id_name, datas) {
+            $("#" + id_name).CanvasJSChart(datas);
+        };
+    </script>
+</head>
+<body>
+    <form id="search" method="post" action="{{ url_for('home') }}" style="display:table;border-spacing: 10px;">
+            <div style="font-size:30px">
+                key in SQL
+            </div>
+            <div>
+                <textarea type="text" name="sql_input" style="width:800px;height:200px;font-size:20px">{{ sql }}</textarea>
+            </div>
+            <div style="margin:0px 0px 0px 500px">
+                lines : <input type="text" name="lines" value="20" style="width:80px;font-size:20px">
+                <input type="submit" name="submit" value="search" onClick="submit_form" style="width:120px;height:50px;font-size:30px"></p>
+            </div>
+            <div style="display:table-cell">
+                  {% for table in table_name %}
+                      <h2>{{names[loop.index]}}</h2>
+                      <input type="submit" name="submit" value="{{ table|safe }}" onClick="submit_form" style="font-size:24px">
+                  {% endfor %}
+            </div>
+    </form>
+
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <div style="display:table;border-spacing: 10px;">
+        <div>
+            {% for table in tables %}
+                    <h1>{{titles[loop.index]}}</h1>
+              {{ table|safe }}
+            {% endfor %}
+        </div>
+        <form id="plot" method="post" action="{{ url_for('draw_tables') }}" style="display:table-cell;">
+            <div id=selectAxis>
+                {% for select in selector %}
+                    <h1>plot</h1>
+                    <h2>cohort : <select name="cohortColumn">
+                          {% for option in options %}
+                              <option value="{{ option|safe }}">{{ option|safe }}</option>
+                          {% endfor %}
+                        </select>
+                    </h2>
+                    <h2>x axis : <select required name="x_1">
+                          {% for option in options %}
+                              <option value="{{ option|safe }}">{{ option|safe }}</option>
+                          {% endfor %}
+                        </select>
+                    </h2>
+                    <h2>y axis : <select required name="y_1">
+                          {% for option in options %}
+                              <option value="{{ option|safe }}">{{ option|safe }}</option>
+                          {% endfor %}
+                        </select>
+                        <select name="y_1_aggregate">
+                          {% for type in aggregate_type %}
+                              <option value="{{ type|safe }}">{{ type|safe }}</option>
+                          {% endfor %}
+                        </select>
+                        <select name="y_1_types">
+                          {% for type in plot_type %}
+                              <option value="{{ type|safe }}">{{ type|safe }}</option>
+                          {% endfor %}
+                        </select>
+                    </h2>
+            </div>
+            <div>
+                <input type=button value="+" onClick="add()" style="width:40px;height:40px;font-size:30px">
+            </div>
+            <div>
+                <input type=button value="-" onClick="minus()" style="width:40px;height:40px;font-size:30px">
+            </div>
+            <div>
+                <input type="submit" name="submit" value="plot" onClick="" style="width:80px;height:30px;font-size:20px">
+            </div>
+            {% endfor %}
+            <div id="plot_div">
+            {% for plot_data in ploting_datas %}
+                <script type="text/javascript">
+                    var newNode = document.createElement("div");
+                    var objDivs = document.getElementById("plot_div");
+                    var reforeNode = objDivs[objDivs.childElementCount-1];
+                    newNode.style.cssText = "width: 400px; height: 300px";
+                    newNode.setAttribute("id", plot_name.toString());
+                    objDivs.insertBefore(newNode,reforeNode);
+                    if (typeof {{ plot_data|safe }} === 'string') {
+                        show_plot(plot_name, JSON.parse({{ plot_data|safe }}));
+                    }
+                    else{
+                        show_plot(plot_name, {{ plot_data|safe }})
+                    };
+                    plot_name += 1;
+                </script>
+            {% endfor %}
+            </div>
+        </form>
+    </div>
+</body>
+</html>
