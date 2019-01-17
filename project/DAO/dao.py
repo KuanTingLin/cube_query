@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from model.model import get_cubes
 
 
@@ -23,4 +24,3 @@ def tables():
     config = get_cubes()
     cubes = config["cubes"].get("names").split(" ")
     return cubes
-

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
     web
     Created by  User : woodnata
@@ -214,6 +215,3 @@ def home():
 if __name__ == "__main__":
     args = parser.parse_args()
     app.run(host=args.host, port=args.port, debug=True)
-
-
-
