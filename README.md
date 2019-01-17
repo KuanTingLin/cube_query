@@ -1,5 +1,5 @@
 # cube query
-## version = 1.0.0
+## version = 1.0.1
 
 ## introduction
 > ### This is a simple way to query data cubes on spark.
@@ -21,6 +21,7 @@
     $ cd cube_query/project
     $ python app.py
 ```
+### Now go to http://localhost:5000
 
 ## set host and port
 ```

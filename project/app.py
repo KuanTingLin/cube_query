@@ -8,9 +8,8 @@ from flask import Flask, request, render_template, redirect, url_for, make_respo
 from pyspark.sql import SparkSession
 import json
 import pandas as pd
-from project.scatter_plot import StatisticAnaly
-from project.DAO.dao import read_table, tables
-import sys
+from scatter_plot import StatisticAnaly
+from DAO.dao import read_table, tables
 from argparse import ArgumentParser
 
 parser = ArgumentParser()

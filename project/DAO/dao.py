@@ -1,9 +1,8 @@
-import configparser
+from model.model import get_cubes
 
 
 def read_table(name):
-    config = configparser.ConfigParser()
-    config.read("./conf/cubes.ini", encoding="utf-8")
+    config = get_cubes()
     cubes = config["cubes"].get("names").split(" ")
     if name in cubes:
         cube = config[name]
@@ -21,8 +20,7 @@ def read_table(name):
 
 
 def tables():
-    config = configparser.ConfigParser()
-    config.read("./conf/cubes.ini", encoding="utf-8")
+    config = get_cubes()
     cubes = config["cubes"].get("names").split(" ")
     return cubes
 
