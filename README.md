@@ -1,5 +1,5 @@
 # cube query
-## version = 1.0.2
+## version = 1.0.3
 
 ## introduction
 > ### This is a simple way to query data cubes on spark.

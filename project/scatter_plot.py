@@ -313,7 +313,7 @@ class StatisticAnaly:
                         "dataPoints": list(map(lambda x: {"label": x[0], "y": x[1]}, zip(data["x"], data["y"])))
                     })
             if plot_type in ["line", "area", "bar", "column"]:
-                plot["axisY"] = {"title": y_column, "includeZero": False}
+                plot["axisY"] = {"title": y_column, "includeZero": True}
                 plot["axisX"] = {"interval": 1}
                 plot["data"].append({
                     "type": plot_type,
@@ -365,7 +365,7 @@ class StatisticAnaly:
                         "dataPoints": list(map(lambda x: {"label": x[0], "y": x[1]}, zip(data["x"], data["y"])))
                     })
             if plot_type in ["line", "area", "bar", "column"]:
-                plot["axisY"] = {"title": column, "includeZero": False}
+                plot["axisY"] = {"title": column, "includeZero": True}
                 plot["axisX"] = {"interval": 1}
                 plot["data"].append({
                     "type": plot_type,
