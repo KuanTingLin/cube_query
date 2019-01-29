@@ -189,8 +189,15 @@ def home():
             return response
 
         elif results["submit"] != 'search':
-            df = query_data(results["submit"])
-            describe_df = description(df)
+            if not os.path.isdir("./metadata"):
+                os.mkdir("./metadata")
+            if results["submit"] + ".csv" not in os.listdir("./metadata"):
+                df = query_data(results["submit"])
+                describe_df = description(df)
+                describe_df.to_csv("./metadata/{}.csv".format(result["submit"]), encoding='utf-8')
+            else:
+                df = query_data(results["submit"])
+                describe_df = pd.read_csv("./metadata/{}.csv".format(result["submit"]), index_col=0)
             columns = ["not use"]
             columns.extend(df.columns)
             response = make_response(render_template('index.html',
