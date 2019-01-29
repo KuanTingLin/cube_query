@@ -12,6 +12,7 @@ import pandas as pd
 from scatter_plot import StatisticAnaly
 from DAO.dao import read_table, tables
 from argparse import ArgumentParser
+import os
 
 parser = ArgumentParser()
 
@@ -28,6 +29,7 @@ parser.add_argument('-p', '--port',
                     default=5000)
 
 spark = SparkSession.builder \
+    .master('local[*]')\
     .appName("VenRaaS upload") \
     .config("spark.some.config.option", "some-value") \
     .getOrCreate();
